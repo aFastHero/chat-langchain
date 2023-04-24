@@ -5,7 +5,7 @@ import weaviate
 from langchain.document_loaders import ReadTheDocsLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Weaviate
+from langchain.vectorstores.weaviate import Weaviate
 from langchain.vectorstores.faiss import FAISS
 from langchain.document_loaders import UnstructuredURLLoader
 import dotenv
@@ -38,7 +38,7 @@ def ingest_docs():
     )
     documents = text_splitter.split_documents(raw_documents)
     embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
-    vectorstore = weaviate.from_documents(documents, embeddings)
+    vectorstore = FAISS.from_documents(documents, embeddings)
 
     # Save vectorstore
     with open("vectorstore.pkl", "wb") as f:
