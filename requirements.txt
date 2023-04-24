@@ -18,6 +18,7 @@ cryptography==40.0.2
 dataclasses-json==0.5.7
 decorator==5.1.1
 Deprecated==1.2.13
+dill==0.3.6
 et-xmlfile==1.1.0
 faiss-cpu==1.7.3
 fastapi==0.95.1
@@ -83,7 +84,7 @@ unstructured==0.6.1
 urllib3==1.26.15
 uvicorn==0.21.1
 validators==0.20.0
-weaviate-client==3.16.0
+weaviate-client==3.16.1
 websockets==11.0.2
 wrapt==1.14.1
 XlsxWriter==3.1.0

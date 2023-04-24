@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 python.langchain.com
 langchain.readthedocs.io
+devguide.python.org
 
 # C extensions
 *.so
