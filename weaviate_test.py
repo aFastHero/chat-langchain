@@ -1,6 +1,7 @@
 import weaviate
 import os
 import dotenv
+import langchain
 
 dotenv.load_dotenv()
 
@@ -14,5 +15,3 @@ client = weaviate.Client(
 
 schema = client.schema.get()
 print(schema)
-
-

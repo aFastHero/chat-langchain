@@ -14,12 +14,12 @@ from langchain.document_loaders import TextLoader
 
 dotenv.load_dotenv(".env")
 
-auth_config = weaviate.auth.AuthApiKey(api_key=os.getenv("WEAVIATE_API_KEY"))
+auth_config = weaviate.auth.AuthApiKey(api_key=os.getenv("WEAVIATE_API_KEY"))  # Replace w/ your API Key for the Weaviate instance
 
 # Instantiate the client with the auth config
 client = weaviate.Client(
     url=os.getenv("WEAVIATE_URL"),  # Replace w/ your endpoint
-    auth_client_secret=auth_config  # Replace w/ your API Key for the Weaviate instance
+    auth_client_secret=auth_config
 )
 
 # Instantiate the client with the auth config
