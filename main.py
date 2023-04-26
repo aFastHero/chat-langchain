@@ -1,5 +1,7 @@
 """Main entrypoint for the app."""
 import os
+import dotenv
+import weaviate
 import logging
 import pickle
 from pathlib import Path
@@ -8,10 +10,27 @@ from typing import Optional
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.templating import Jinja2Templates
 from langchain.vectorstores import VectorStore
+from langchain.vectorstores.weaviate import Weaviate
 
 from callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from query_data import get_chain
 from schemas import ChatResponse
+
+dotenv.load_dotenv()
+
+weaviate_url = os.getenv("WEAVIATE_URL")  # Replace w/ your endpoint
+weaviate_api_key = os.getenv("WEAVIATE_API_KEY")  # Replace w/ your Weaviate API Key
+openai_api_key = os.getenv("OPENAI_API_KEY")  # Replace w/ your OpenAI API Key
+
+auth = weaviate.auth.AuthApiKey(
+    api_key=weaviate_api_key
+)
+
+# Instantiate the client with the auth config
+client = weaviate.Client(
+    url=weaviate_url,
+    auth_client_secret=auth
+)
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -21,11 +40,11 @@ vectorstore: Optional[VectorStore] = None
 @app.on_event("startup")
 async def startup_event():
     logging.info("loading vectorstore")
-    if not Path("vectorstore.pkl").exists():
-        raise ValueError("vectorstore.pkl does not exist, please run ingest.py first")
-    with open("vectorstore.pkl", "rb") as f:
-        global vectorstore
-        vectorstore = pickle.load(f)
+    # if not Path("vectorstore.pkl").exists():
+    #     raise ValueError("vectorstore.pkl does not exist, please run ingest.py first")
+    # with open("vectorstore.pkl", "rb") as f:
+    global vectorstore
+    vectorstore = Weaviate(client, "Python", "text")  # pickle.load(f)
 
 
 @app.get("/")
