@@ -44,7 +44,7 @@ async def startup_event():
     #     raise ValueError("vectorstore.pkl does not exist, please run ingest.py first")
     # with open("vectorstore.pkl", "rb") as f:
     global vectorstore
-    vectorstore = Weaviate(client, "Python", "text")  # pickle.load(f)
+    vectorstore = Weaviate(client, "AutoGpt", "raw_text")  # pickle.load(f)
 
 
 @app.get("/")
